@@ -1,13 +1,15 @@
 from dotenv import load_dotenv
 from crewai import Crew
-from agents import receptionist_agent
+from agents import HospitalReceptionAgents
 from tasks import reception_task
 
 load_dotenv()
 
 symptom = input("Enter the symptom: ")
 
-receptionist = receptionist_agent()
+agents = HospitalReceptionAgents()
+
+receptionist = agents.receptionist_agent()
 
 reception = reception_task(receptionist, symptom)
 
