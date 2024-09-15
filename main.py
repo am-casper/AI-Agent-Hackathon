@@ -2,7 +2,9 @@ from dotenv import load_dotenv
 from crewai import Crew
 from agents import HospitalReceptionAgents
 from tasks import reception_task
+import agentops
 
+agentops.init()
 load_dotenv()
 
 symptom = input("Enter the symptom: ")
