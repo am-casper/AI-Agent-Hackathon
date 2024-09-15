@@ -3,3 +3,9 @@ id,name,degree,start time,end time
 2,Dr. Johnson,Orthopedic,08:30:00,11:30:00
 3,Dr. Brown,Cardiologist,16:00:00,20:00:00
 4,Dr. Kumar,Physician,18:00:00,19:30:00
+5,Dr. Smith,Neurologist,09:00:00,12:00:00
+6,Dr. Lee,Surgeon,14:00:00,18:00:00
+7,Dr. Patel,Dermatologist,10:00:00,13:00:00
+8,Dr. Garcia,Pediatrician,07:00:00,11:00:00
+9,Dr. Martinez,Oncologist,12:00:00,16:00:00
+10,Dr. Wilson,Endocrinologist,15:00:00,19:00:00
