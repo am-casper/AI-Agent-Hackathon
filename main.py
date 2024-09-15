@@ -19,15 +19,47 @@ reception = reception_task(receptionist, symptom)
 icu = icu_task(icu_nurse, symptom)
 maanger_task = manager_task(manager)
 
-crew = Crew(
-    agents=[receptionist, icu_nurse], 
-    tasks=[reception, icu],
+crew1 = Crew(
+    agents=[receptionist], 
+    tasks=[reception],
     verbose=True,
     process=Process.sequential,  # Specifies the hierarchical management approach
     # memory=True,  # Enable memory usage for enhanced task execution
-    manager_agent=manager,  # Optional: explicitly set a specific agent as manager instead of the manager_llm
+    # manager_agent=manager,  # Optional: explicitly set a specific agent as manager instead of the manager_llm
+    )
+crew2 = Crew(
+    agents=[icu_nurse], 
+    tasks=[icu],
+    verbose=True,
+    process=Process.sequential,  # Specifies the hierarchical management approach
+    # memory=True,  # Enable memory usage for enhanced task execution
+    # manager_agent=manager,  # Optional: explicitly set a specific agent as manager instead of the manager_llm
     )
 
-result = crew.kickoff()
+crew3 = Crew(
+    agents=[manager], 
+    tasks=[maanger_task],
+    verbose=True,
+    process=Process.sequential,  # Specifies the hierarchical management approach
+    # memory=True,  # Enable memory usage for enhanced task execution
+    # manager_agent=manager,  # Optional: explicitly set a specific agent as manager instead of the manager_llm
+    )
 
-print(result)
+doctorAssigned = crew1.kickoff(inputs={
+    'symptom': symptom
+})
+
+# print(doctorAssigned)
+
+ICUAssigned = crew2.kickoff(inputs={
+    'symptom': symptom
+})
+
+# print(ICUAssigned)
+
+managerCrew = crew3.kickoff(inputs={
+    "doctor": str(doctorAssigned),
+    "icu": str(ICUAssigned)
+})
+
+print(managerCrew)

@@ -38,6 +38,24 @@ def load_icus_from_csv(csv_file):
                 })
         return icus
 
+def load_medicines_from_csv(csv_file):
+        """Load medicine data from a CSV file and return a list of medicine dictionaries."""
+        medicines = []
+        with open(csv_file, mode='r') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                medicines.append({
+                    'id': row['id'],
+                    'name': row['name'],
+                    'price': row['price'],
+                    'availability': row['availability'],
+                    'manufacturer': row['manufacturer'],
+                    'type': row['type'],
+                    'packaging': row['packaging'],
+                    'composition': row['composition']
+                })
+        return medicines
+
 def parse_time(time_str):
         """Convert a time string (e.g. '06:30:00') into a time object."""
         hours, minutes, seconds = map(int, time_str.split(':'))
@@ -77,7 +95,7 @@ def icu_task(agent, symptom):
         description=dedent(f"""\
             A patient comes to the ICU with symptom {symptom}. 
             The ICU nurse needs to understand the symptom and assign the patient to the ICU.
-            The patient can come any time of the day.
+            The patient can come any time of the day. It is not necessary to assign all patients to the ICU.
             Available ICUs: {icu_info}
         """),
         agent=agent,
@@ -93,4 +111,24 @@ def manager_task(agent):
         agent=agent,
         verbose=True,
         expected_output="A single word describing the doctor and ICU assigned to the patient based on their symptom.",
+    )
+    
+def pharmacy_task(agent, symptom):
+    medicine_file = 'medicines.csv'
+    medicines = load_medicines_from_csv(medicine_file)
+    
+    medicine_info = "\n".join(
+        [f"{med['name']} - {med['manufacturer']}, Price: {med['price']}, Type: {med['type']}, Packaging: {med['packaging']}, Composition: {med['composition']}" for med in medicines]
+    )
+    
+    return Task(
+        description=dedent(f"""\
+            A patient comes to the pharmacy with a symptom {symptom}. 
+            The pharmacist needs to understand the symptom and provide the patient with the right medicine. 
+            If the patient needs doctor assistance, the pharmacist should inform the patient.
+            Available medicines: {medicine_info}
+        """),
+        agent=agent,
+        verbose=True,
+        expected_output="A single word describing the medicine provided to the patient based on their prescription and why.",
     )
