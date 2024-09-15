@@ -1,0 +1,11 @@
+id,icu number,specialization,capacity,start time,end time
+1,101,Cardiology,10,08:00:00,16:00:00
+2,102,Neurology,12,09:00:00,17:00:00
+3,103,Orthopedics,15,10:00:00,18:00:00
+4,104,Pediatrics,8,11:00:00,19:00:00
+5,105,Oncology,20,12:00:00,20:00:00
+6,106,Neurology,10,13:00:00,21:00:00
+7,107,Cardiology,14,14:00:00,22:00:00
+8,108,Orthopedics,16,15:00:00,23:00:00
+9,109,Pediatrics,9,16:00:00,00:00:00
+10,110,Oncology,18,17:00:00,01:00:00
